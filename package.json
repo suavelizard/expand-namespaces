@@ -1,0 +1,62 @@
+{
+  "name": "@venzee/venzee-lambda",
+  "version": "0.0.1",
+  "description": "Repository to store lambda deploy packages",
+  "scripts": {
+    "precommit": "lint-staged",
+    "pretest": "eslint --fix .",
+    "test": "npm run run-tests",
+    "tdd": "npm run run-tdd",
+    "coverage": "nyc npm run run-tests",
+    "run-tests": "cross-env LOG_LEVEL=OFF mocha --require ./spec/.config/bootstrap.js --colors --require babel-core/register ./spec/**/*.test.js",
+    "run-tdd": "mocha --require ./spec/.config/bootstrap.js --watch --colors --require babel-core/register ./spec/**/*.test.js"
+  },
+  "author": "Venzee, Inc.",
+  "private": true,
+  "dependencies": {
+    "deep-freeze": "0.0.1",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-istanbul": "^4.1.5",
+    "babel-plugin-module-resolver": "^3.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "chai": "^4.1.2",
+    "colors": "^1.1.2",
+    "cross-env": "^5.1.1",
+    "eslint": "^4.7.2",
+    "eslint-plugin-chai-expect": "^1.1.1",
+    "eslint-plugin-mocha": "^4.11.0",
+    "eslint-plugin-varspacing": "^1.1.0",
+    "fs-extra": "^4.0.2",
+    "husky": "^0.14.3",
+    "istanbul-instrumenter-loader": "^3.0.0",
+    "lint-staged": "^7.0.0",
+    "mocha": "^3.5.3",
+    "mocha-webpack": "^1.0.1",
+    "mock-fs": "^4.4.1",
+    "nyc": "^11.2.1",
+    "prettier": "^1.11.0",
+    "proxyquire": "^1.8.0",
+    "sinon": "^2.4.1",
+    "sinon-chai": "^2.14.0",
+    "webpack": "^3.8.1"
+  },
+  "engines": {
+    "node": ">=6.10.3"
+  },
+  "lint-staged": {
+    "*.{json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  }
+}

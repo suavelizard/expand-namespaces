@@ -1,0 +1,21 @@
+{
+  "lines": 99,
+  "statements": 99,
+  "functions": 99,
+  "branches": 99,
+  "require": [
+    "./spec/.config/bootstrap.js",
+    "babel-core/register"
+  ],
+  "exclude": [
+    "spec/**/*.js",
+    "coverage",
+    "lib/loadNamespaces.js"
+  ],
+  "reporter": [
+    "text",
+    "html",
+    "lcov"
+  ],
+  "all": true
+}
