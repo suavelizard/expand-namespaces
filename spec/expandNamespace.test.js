@@ -1,7 +1,9 @@
 const proxyquire = require( 'proxyquire' );
+const mock = require('mock-fs');
 
 describe( 'The ./lib/expandNamespaces function', ()=>{
 
+  afterEach(mock.restore);
   it( 'should keep paths without namespaces unchanged', ()=>{
 
     const expandNamespaces = proxyquire( '../lib/expandNamespace', {
@@ -51,7 +53,24 @@ describe( 'The ./lib/expandNamespaces function', ()=>{
     const callerPath = './projectPath';
     expect( ()=>{expandNamespaces( `<foo>./somepath`)} ).to.throw('namespace <foo> is not defined.');
   } );
-  
+
+  it( 'should load the correct file contents', ()=>{
+    const expandNamespaces = proxyquire( '../lib/expandNamespace', {
+      './loadNamespaces': sinon.stub().returns({namespaces: {'foo':'./foo-module/child'}})
+    } );
+    mock({
+      'bar-module/index.js': '',
+      'foo-module':{
+        'child':{
+          'hello.txt': 'Hello World!',
+        }
+      }
+    });
+    const fs = require('fs');
+    const contents = fs.readFileSync(expandNamespaces('<foo>/hello.txt', './'), 'utf8');
+    expect( contents ).to.equal('Hello World!');
+  } );
+
   //  Some faling tests below. I believe it should manage to resolve these.
   it( 'should convert absolute to relative', ()=>{
     const expandNamespaces = proxyquire( '../lib/expandNamespace', {
